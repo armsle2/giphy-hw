@@ -1,3 +1,9 @@
 form{
 	float: right;
 }
+button{
+	margin: 5px;
+}
+#giphy-buttons{
+	width: 90%;
+}
