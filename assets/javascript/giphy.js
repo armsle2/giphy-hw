@@ -2,27 +2,56 @@
 var movies = ["Star Wars", "Collateral", "300", "The Matrix"];
 //array for movies that user searches
 var userMovies = [];
+//retrieve contents of local storage which is being stringified as an array and store it in a variable 
+var storedData = JSON.parse(localStorage.getItem("giphy"));
+
 
 
 //create function that populates developer movie buttons to HTML
-function displayButtons(){
+//pass parameter (gifs) through so that any given array may be displayed
+function displayButtons(gifs){
 		//clear out div so that appended array doesn't double
 		$("#giphy-buttons").empty();
 	//put each index of array into a button
 	//create loop for developer movie array
-		for (var i = 0; i < movies.length; i++){
+		for (var i = 0; i < gifs.length; i++){
 		// console.log(local);
 
 		//create button variable
 		var movieButton = $("<button class='btn btn-success'>");
 		//create id attribute for button variable and set value to developer movie array loop
-		movieButton.attr("id", movies[i]);
+		movieButton.attr("id", gifs[i]);
 		//add class unique class to identify giphy buttons
 		movieButton.addClass("giphy-button");
 		//write names of each developer movie into button text
-		movieButton.text(movies[i]);
+		movieButton.text(gifs[i]);
 		//append mutated button variable to #giphy-buttons id
 		$("#giphy-buttons").append(movieButton);
+		
+	}
+
+	
+}
+
+//create function that displays buttons that user adds just like display buttons function except append it to 
+function userButtons(gifs){
+		//clear out div so that appended array doesn't double
+		$("#user-giphy-buttons").empty();
+	//put each index of array into a button
+	//create loop for developer movie array
+		for (var i = 0; i < gifs.length; i++){
+		// console.log(local);
+
+		//create button variable
+		var movieButton = $("<button class='btn btn-primary'>");
+		//create id attribute for button variable and set value to developer movie array loop
+		movieButton.attr("id", gifs[i]);
+		//add class unique class to identify giphy buttons
+		movieButton.addClass("giphy-button");
+		//write names of each developer movie into button text
+		movieButton.text(gifs[i]);
+		//append mutated button variable to #giphy-buttons id
+		$("#user-giphy-buttons").append(movieButton);
 		
 	}
 
@@ -31,7 +60,22 @@ function displayButtons(){
 $(document).ready(function(){
 
 //run displayButtons function to display movies chosen by developer
-displayButtons();
+displayButtons(movies);
+//the following is necessary to display stored data in the form of buttons if there is any stored data to begin with
+	//create if/else condition 
+	//if storedData is null (no local storage acquired due to user's first time loading page) do nothing
+if (storedData === null){
+}else{
+//run function userButtons and pass through storedData array
+userButtons(storedData);
+//create for loop for storedData array
+for (var i = 0; i < storedData.length; i++){
+			//push storedData loop into userMovies array
+	userMovies.push(storedData[i]);
+//**NOTE**: WITHOUT LOCAL STORAGE BEING PUSHED INTO USERMOVIES ARRAY WHEN PAGE IS RELOADED, LOCAL STORAGE WILL ALWAYS BE RESET AFTER USER'S FIRST SUBMISSION SINCE USERMOVIES ARRAY IS NATIVELY EMPTY AND THATS WHERE THE LOCAL STORAGE SET FUNCTION LOOKS TO FOR ITS DATA
+		}
+}
+//the following click handler will be responsible for grabbing API data and displaying it oin html
 $(document).on("click", ".giphy-button", function(){
 	// alert($(this).attr("id"))
 	//create variable that has movie name in it
@@ -73,7 +117,7 @@ $(document).on("click", ".giphy-button", function(){
 					//set variable equal to data-still value of giphy clicked
 						var still = $(this).attr("data-still");
 						console.log(play);
-						//create if/else statement based on current value of src
+						//create if/else statement based on current value of src to use the play gif link or the still gif link
 						if ($(this).attr("src") === still){
 							$(this).attr("src", play)
 						}else {
@@ -82,11 +126,7 @@ $(document).on("click", ".giphy-button", function(){
 				
 					});
 				
-			})
-
-
-
-
+			});
 
 	});
 //create click handler for when user submits a movie
@@ -95,66 +135,21 @@ $("#giphy-submit").on("click", function(event){
 	event.preventDefault();
 	//captue user input in variable
 	var userInput = $("#giphy-input").val().trim();
-	//push user input to user movies array
+	//push user input to userMovies array
 	userMovies.push(userInput);
-	//set user movies array to local storage by using JSON.stringify function
+	//set userMovies array to local storage by using JSON.stringify function
 	localStorage.setItem("giphy", JSON.stringify(userMovies));
 	//clear user input field
 	$("#giphy-input").val("");
-	//create variable to get data from local storage. since local storage items are being set as an array we use JSON.parse function to retrieve that array
-	var storedData = JSON.parse(localStorage.getItem("giphy"));
-	console.log(storedData);
 	//clear user giphy buttons div before writing updated array of buttons
 	$("#user-giphy-buttons").empty();
-	//create for loop that loops through the storedData variable displaying movie names stored in local storage
-	for (var i = 0; i < storedData.length; i++){
-		// console.log(local);
+	//retrieve data from local storage and set it to be the new value of global variable storedData 
+	storedData = JSON.parse(localStorage.getItem("giphy"));
+	userButtons(storedData);
+	
+});
 
-		//create button variable just like displayButtons function
-		var movieButton = $("<button class='btn btn-primary'>");
-		//create id attribute for button variable and set value to array loop
-		movieButton.attr("id", storedData[i]);
-		movieButton.addClass("giphy-button");
-		movieButton.text(storedData[i]);
-		//append mutated button variable to #giphy-buttons id
-		$("#user-giphy-buttons").append(movieButton);
-		//on click of #giphy-button alert giphy name for test
-	}
 
-})
-//the following is necessary to display stored data in the form of buttons if there is any stored data to begin with
-	//set variable to data from local storage (an array)
-var storedData = JSON.parse(localStorage.getItem("giphy"));
-	// console.log(storedData);
-	//create if/else condition 
-	//if storedData is null (no local storage acquired due to user's first time loading page) do nothing
-	if (storedData === null){
-		//if storedData is not null and userMovies length is equal to 0 (nothing in the array)
-	}else if (userMovies.length === 0){
-		//run a for loop based on storedData
-		for (var i = 0; i < storedData.length; i++){
-			//push storedData loop into userMovies array
-//**NOTE**: WITHOUT LOCAL STORAGE BEING PUSHED INTO USERMOVIES ARRAY WHEN PAGE IS RELOADED, LOCAL STORAGE WILL ALWAYS BE RESET AFTER USER'S FIRST SUBMISSION SINCE USERMOVIES ARRAY IS NATIVELY EMPTY AND THATS WHERE THE LOCAL STORAGE SET FUNCTION LOOKS TO FOR ITS DATA
-	userMovies.push(storedData[i]);
-		}
-	console.log(userMovies)
-	}
-	//clear user giphy buttons so they don't double when updated array is appended
-	$("#user-giphy-buttons").empty();
-	//create for loop that will iterate through storedData array and post current local storage data to page on reload
-	for (var i = 0; i < storedData.length; i++){
-		// console.log(local);
-
-		//create button variable
-		var movieButton = $("<button class='btn btn-primary'>");
-		//create id attribute for button variable and set value to array loop
-		movieButton.attr("id", storedData[i]);
-		movieButton.addClass("giphy-button");
-		movieButton.text(storedData[i]);
-		//append mutated button variable to #giphy-buttons id
-		$("#user-giphy-buttons").append(movieButton);
-		//on click of #giphy-button alert giphy name for test
-	}
 
 
 
