@@ -1,11 +1,15 @@
 //create an array of movies to put into api search
-var movies = ["The Avengers", "Collateral", "300", "The Matrix"];
+var movies = ["Star Wars", "Collateral", "300", "The Matrix"];
+var giphyCount = 0;
+var storageArray = [];
+
+
 //create function that populates movie buttons to HTML
 function displayButtons(){
 		$("#giphy-buttons").empty();
-
 	//put each index of array into button
 		for (var i = 0; i < movies.length; i++){
+		// console.log(local);
 
 		//create button variable
 		var movieButton = $("<button class='btn btn-success'>");
@@ -15,10 +19,30 @@ function displayButtons(){
 		movieButton.text(movies[i]);
 		//append mutated button variable to #giphy-buttons id
 		$("#giphy-buttons").append(movieButton);
-
 		//on click of #giphy-button alert giphy name for test
+		
 	}
 
+}
+
+function storage(){
+		console.log(storedData);
+
+		//put each index of array into button
+		for (var i = 0; i < storageArray.length; i++){
+		// console.log(local);
+
+		//create button variable
+		var movieButton = $("<button class='btn btn-success'>");
+		//create id attribute for button variable and set value to array loop
+		movieButton.attr("id", movies[i]);
+		movieButton.addClass("giphy-button");
+		movieButton.text(storageArray[i]);
+		//append mutated button variable to #giphy-buttons id
+		$("#giphy-buttons").append(movieButton);
+		//on click of #giphy-button alert giphy name for test
+	}
+	
 }
 $(document).ready(function(){
 
@@ -73,14 +97,54 @@ $(document).on("click", ".giphy-button", function(){
 	});
 $("#giphy-submit").on("click", function(event){
 	event.preventDefault();
-
 	var userInput = $("#giphy-input").val().trim();
 
-	movies.push(userInput);
-	displayButtons();
-	$("#giphy-input").val("")
+	storageArray.push(userInput);
+	// console.log(storageArray);
+	localStorage.setItem("giphy", JSON.stringify(storageArray));
+	$("#giphy-input").val("");
+	var storedData = JSON.parse(localStorage.getItem("giphy"));
+	console.log(storedData);
+	$("#user-giphy-buttons").empty();
+	for (var i = 0; i < storedData.length; i++){
+		// console.log(local);
+
+		//create button variable
+		var movieButton = $("<button class='btn btn-success'>");
+		//create id attribute for button variable and set value to array loop
+		movieButton.attr("id", storedData[i]);
+		movieButton.addClass("giphy-button");
+		movieButton.text(storedData[i]);
+		//append mutated button variable to #giphy-buttons id
+		$("#user-giphy-buttons").append(movieButton);
+		//on click of #giphy-button alert giphy name for test
+	}
 
 })
+	
+var storedData = JSON.parse(localStorage.getItem("giphy"));
+	// console.log(storedData);
+	if (storedData === null){
+	}else if (storageArray.length === 0){
+		for (var i = 0; i < storedData.length; i++){
+	storageArray.push(storedData[i]);
+		}
+	console.log(storageArray)
+	}
+	$("#user-giphy-buttons").empty();
+	for (var i = 0; i < storedData.length; i++){
+		// console.log(local);
+
+		//create button variable
+		var movieButton = $("<button class='btn btn-success'>");
+		//create id attribute for button variable and set value to array loop
+		movieButton.attr("id", storedData[i]);
+		movieButton.addClass("giphy-button");
+		movieButton.text(storedData[i]);
+		//append mutated button variable to #giphy-buttons id
+		$("#user-giphy-buttons").append(movieButton);
+		//on click of #giphy-button alert giphy name for test
+	}
 
 
 
