@@ -1,7 +1,55 @@
+.bgimage {
+	position: absolute;
+  background-image: url("../images/movie-theater.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  position: fixed;
+  height:100%;
+  opacity: .7;
+  width: 100%;
+}
 button{
 	margin: 5px;
+	/*width: 111px;*/
+	height: 45px;
 }
 img{
 	margin: 5px;
 	max-width: 400px;
+}
+.jumbotron{
+	font-family: 'Ranchers', cursive;
+	background-color: transparent;
+position: relative;
+letter-spacing: 10px;
+  background: -webkit-linear-gradient(#bbafaf, #e81111);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+}
+.container{
+position: relative;
+margin-top: -73px;
+width: 90%;
+}
+.col-sm-9{
+	margin-top: 73px;
+}
+/*.col-sm-3{
+	margin-left: 10px;
+}*/
+label{
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	letter-spacing: 2px;
+}
+
+
+#arrow img{
+	height: 100px;
+	 -ms-transform: rotate(-74deg);
+    -webkit-transform: rotate(-74deg);
+    transform: rotate(-74deg);
 }

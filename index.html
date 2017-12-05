@@ -2,22 +2,29 @@
 <html>
 <head>
 	<title>Giphy HW</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link href="https://fonts.googleapis.com/css?family=Ranchers" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="assets/javascript/giphy.js"></script>
 </head>
 <body>
-	<!-- <div class="container-fluid"> -->
+	<div class="bgimage"></div>
+	<div class="jumbotron text-center">
+		<h1>GIPHY   MOVIES!</h1>
+	</div>
+	<div class="container">
 		<div class="row">
-			<div class="col-sm-10">
+			<div class="col-sm-9" align="center">
 				<div id="giphy-buttons"></div>
 				<div id="user-giphy-buttons"></div>
 				<div id="giphys"></div>
 			</div>
-			<div class="col-sm-2" align="center">
+			<div class="col-sm-3" align="center">
+				<div id="arrow"><img src="assets/images/red-arrow.png"></div>
 				<form for="giphy-form">
-					<label for="giphy-input">Add A Movie</label><br />
+					<label for="giphy-input"><h2>Add A Movie</h2></label><br />
 					<input type="text" id="giphy-input">
 					<br />
 					<br />
@@ -25,6 +32,6 @@
 				</form>
 			</div>
 		</div>
-	<!-- </div> -->
+	</div>
 </body>
 </html>
